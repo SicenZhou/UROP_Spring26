@@ -1,24 +1,23 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-[ExecuteInEditMode]
 public class ProgressBar : MonoBehaviour
 {
-    public int maximun;
-    public int current;
-    public Image mask;
+    public TutorialManager tutorialManager; 
+    public RectTransform progressBarFill; 
+    public RectTransform background;
 
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateProgressBar()
     {
-        GetCurrentFill();
-    }
+        TutorialGroup group = tutorialManager.currentGroup;
 
-    void GetCurrentFill()
-    {
-        float fillAmount = (float)current / (float)maximun;
-        mask.fillAmount = fillAmount;
+        int currentIndex = group.tutorialIndex;
+        int total = group.tutorialObjects.Count;
 
+        float progress = (float)(currentIndex + 1) / total;
+        float width = background.rect.width;
+
+        progressBarFill.sizeDelta = new Vector2(width * progress, progressBarFill.sizeDelta.y);
     }
 }
+
